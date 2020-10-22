@@ -1,0 +1,12 @@
+.vscode
+.sln
+.csproj
+.DS_Store
+dev.db
+Library/
+local/
+temp/
+build/
+log/
+.vs/
+obj/

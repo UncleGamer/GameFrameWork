@@ -1,0 +1,101 @@
+/**
+*   客户端与逻辑服之间的消息定义
+*/
+syntax = "proto2";
+option java_package = "pcluster.proto";
+package proto;
+
+
+message CS_Player_Tick {
+    optional string msg = 1;
+}
+
+message SC_Player_Tick {
+    optional string msg = 1;
+}
+
+// 登录
+message CS_Player_Login {
+    optional string token = 1;
+}
+
+// 登录返回
+message SC_Player_Login {
+    optional string id = 1; // 防止大数传输异常,这里直接用字符
+}
+
+message CS_Player_Test {
+    optional string msg = 1;
+}
+
+message SC_Player_Test {
+    optional string msg = 1;
+    optional string date = 2;
+}
+
+message CS_Player_AddCoin {
+    optional int32 coin = 1;
+}
+
+message SC_Player_AddCoin {
+    optional int32 coin = 1;
+}
+
+// 聊天协议
+message CS_Chat_Join {
+    optional string playerName = 1;
+}
+
+message SC_Chat_Join {
+    optional int32 code = 1;
+}
+
+message CS_Chat_Leave {
+    optional string playerName = 1;
+}
+
+message SC_Chat_Leave {
+    optional int32 code = 1;
+}
+
+message CS_Chat_Talk {
+    optional string msg = 1;
+}
+
+message SC_Chat_Talk {
+    optional int32 code = 1;
+    optional string from = 2;
+    optional string msg = 3;
+}
+
+// 工会协议
+message CS_Guide_Create {
+    optional string guideName = 1;
+    optional string player = 2;
+}
+
+message SC_Guide_Create {
+}
+
+message CS_Guide_Join {
+    optional string player = 1;
+}
+
+message SC_Guide_Join {
+}
+
+message CS_Guide_Leave {
+    optional string player = 1;
+}
+
+message SC_Guide_Leave {
+    optional int32 code = 1;
+}
+
+message CS_Guide_Contribute {
+    optional int32 coin = 1;
+}
+
+message SC_Guide_Contribute {
+    optional int32 code = 1;
+}
