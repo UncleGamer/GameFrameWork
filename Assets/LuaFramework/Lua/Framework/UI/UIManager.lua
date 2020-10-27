@@ -9,7 +9,7 @@
 -- 5、可将UIManager看做一个挂载在UIRoot上的不完全UI组件，但是它是Singleton，不使用多重继承，UI组件特性隐式实现
 --]]
 
-local Messenger = require "Framework.Common.Messenger"
+local Messenger = require "Framework.Common.facade"
 local UIManager = BaseClass("UIManager", Singleton)
 
 -- UIRoot路径
@@ -80,18 +80,18 @@ local function __init(self)
 end
 
 -- 注册消息
-local function AddListener(self, e_type, e_listener)
-	self.ui_message_center:AddListener(e_type, e_listener)
+local function AddListener(self, e_type, e_listener, e_inst)
+	self.ui_message_center:subscribe(e_type, e_listener, e_inst)
 end
 
 -- 发送消息
 local function Broadcast(self, e_type, ...)
-	self.ui_message_center:Broadcast(e_type, ...)
+	self.ui_message_center:brocast(e_type, ...)
 end
 
 -- 注销消息
 local function RemoveListener(self, e_type, e_listener)
-	self.ui_message_center:RemoveListener(e_type, e_listener)
+	self.ui_message_center:unsubscribe(e_type, e_listener)
 end
 
 -- 更新，每帧刷新

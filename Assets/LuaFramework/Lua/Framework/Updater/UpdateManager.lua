@@ -6,7 +6,7 @@
 -- 2、tolua的event没有使用weak表，直接使用tolua的更新系统会导致脚本被event持有引用而无法释放---除非每次都记得手动去释放
 --]]
 
-local Messenger = require "Framework.Common.Messenger"
+local Messenger = require "Framework.Common.facade"
 local UpdateManager = BaseClass("UpdateManager", Singleton)
 local UpdateMsgName = "Update"
 local LateUpdateMsgName = "LateUpdateMsgName"
@@ -27,17 +27,17 @@ end
 
 -- Update回调
 local function UpdateHandle(self)
-	self.ui_message_center:Broadcast(UpdateMsgName)
+	self.ui_message_center:brocast(UpdateMsgName)
 end
 
 -- LateUpdate回调
 local function LateUpdateHandle(self)
-	self.ui_message_center:Broadcast(LateUpdateMsgName)
+	self.ui_message_center:brocast(LateUpdateMsgName)
 end
 
 -- FixedUpdate回调
 local function FixedUpdateHandle(self)
-	self.ui_message_center:Broadcast(FixedUpdateMsgName)
+	self.ui_message_center:brocast(FixedUpdateMsgName)
 end
 
 -- 启动
@@ -73,32 +73,32 @@ end
 
 -- 添加Update更新
 local function AddUpdate(self, e_listener)
-	self.ui_message_center:AddListener(UpdateMsgName, e_listener)
+	self.ui_message_center:subscribe(UpdateMsgName, e_listener)
 end
 
 -- 添加LateUpdate更新
 local function AddLateUpdate(self, e_listener)
-	self.ui_message_center:AddListener(LateUpdateMsgName, e_listener)
+	self.ui_message_center:subscribe(LateUpdateMsgName, e_listener)
 end
 
 -- 添加FixedUpdate更新
 local function AddFixedUpdate(self, e_listener)
-	self.ui_message_center:AddListener(FixedUpdateMsgName, e_listener)
+	self.ui_message_center:subscribe(FixedUpdateMsgName, e_listener)
 end
 
 -- 移除Update更新
 local function RemoveUpdate(self, e_listener)
-	self.ui_message_center:RemoveListener(UpdateMsgName, e_listener)
+	self.ui_message_center:unsubscribe(UpdateMsgName, e_listener)
 end
 
 -- 移除LateUpdate更新
 local function RemoveLateUpdate(self, e_listener)
-	self.ui_message_center:RemoveListener(LateUpdateMsgName, e_listener)
+	self.ui_message_center:unsubscribe(LateUpdateMsgName, e_listener)
 end
 
 -- 移除FixedUpdate更新
 local function RemoveFixedUpdate(self, e_listener)
-	self.ui_message_center:RemoveListener(FixedUpdateMsgName, e_listener)
+	self.ui_message_center:unsubscribe(FixedUpdateMsgName, e_listener)
 end
 
 -- 析构函数

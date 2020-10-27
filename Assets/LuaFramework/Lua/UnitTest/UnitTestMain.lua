@@ -6,6 +6,7 @@
 
 local LoggerTest = require "UnitTest.LoggerTest"
 local NetWorkTest = require "UnitTest.NetWorkTest"
+local EventTest = require 'UnitTest.EventTest'
 
 local function LoopRunTimes(unitTests, times)
 	for i = 1,times do
@@ -21,7 +22,8 @@ end
 
 local function Run()
 	LoggerTest.Run()
-	NetWorkTest.Run()
+	--NetWorkTest.Run()
+	EventTest.Run()
 end
 
 return {

@@ -7,7 +7,7 @@
 -- 3、游戏UI模块各Model层监听数据中心消息提取各个Window关注的模型数据
 --]]
 
-local Messenger = require "Framework.Common.Messenger"
+local Messenger = require "Framework.Common.facade"
 local unpack = unpack or table.unpack
 
 local DataManager = BaseClass("DataManager", Singleton);
@@ -22,18 +22,18 @@ local function __delete(self)
 end
 
 -- 注册消息
-local function AddListener(self, e_type, e_listener, ...)
-	self.data_message_center:AddListener(e_type, e_listener, ...)
+local function AddListener(self, e_type, e_listener, e_inst)
+	self.data_message_center:subscribe(e_type, e_listener, e_inst)
 end
 
 -- 发送消息
 local function Broadcast(self, e_type, ...)
-	self.data_message_center:Broadcast(e_type, ...)
+	self.data_message_center:brocast(e_type, ...)
 end
 
 -- 注销消息
 local function RemoveListener(self, e_type, e_listener)
-	self.data_message_center:RemoveListener(e_type, e_listener)
+	self.data_message_center:unsubscribe(e_type, e_listener)
 end
 
 DataManager.__init = __init
