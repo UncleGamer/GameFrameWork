@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using LuaFramework;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -338,5 +339,23 @@ namespace LuaFramework {
 			#endif
 			return true;
 		}
-	}
+
+        public static List<Type> GetAllTypes(Type _type)
+        {
+            List<Type> allTypes = new List<Type>();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            for (int i = 0; i < assemblies.Length; i++)
+            {
+                try
+                {
+                    allTypes.AddRange(assemblies[i].GetTypes().Where(type => type.IsDefined(_type, false)));
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return allTypes;
+        }
+    }
 }
